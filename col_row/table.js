@@ -29,7 +29,12 @@ class Table{
         this.#tbody = table.appendChild(document.createElement("tbody"))
 
         for (const i of headerArray){
-            const th = thead.appendChild(document.createElement("th"))
+            const th = document.createElement("th")
+            th.innerText=i.name
+            if(i.colspan==2){
+                th.colSpan=2
+            }
+            thead.appendChild(th)
         }
     }
 
