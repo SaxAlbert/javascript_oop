@@ -6,6 +6,10 @@ class FormController{
      */
     #manager
     /**
+     * @type {HTMLFormElement}
+     */
+    #form
+    /**
      * @type {FormField[]}
      */
     #formFieldElemList
@@ -17,19 +21,20 @@ class FormController{
     constructor(formFieldList,manager){
         this.#manager=manager
         const form=document.createElement('form')
+        this.#form=form
         document.body.appendChild(form)
         //itt lesznek a bevitelimezők rendezései
         
         this.#formFieldElemList=[]
         for(const arr of formFieldList){
-            const formFieldElem=new FormField(arr.id,arr.name,arr.label,arr.required,form)
+            const formFieldElem=new FormField(arr.id,arr.name,arr.label,arr.required,this.#form)
             this.#formFieldElemList.push(formFieldElem)
         }
         const button=document.createElement('button')
         button.innerText='Küldés'
-        form.appendChild(button)
+        this.#form.appendChild(button)
 
-        form.addEventListener('submit',(e)=>{
+        this.#form.addEventListener('submit',(e)=>{
             e.preventDefault()
             const elem=this.#createElement()
             if(elem){
