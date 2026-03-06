@@ -34,6 +34,7 @@ class AuthorManager{
         author.name=element.author
         author.work=element.work
         author.concept=element.concept
+        this.#authorList.push(author)
     }
     getAllElement(){
         this.#tableCallback(this.#authorList)
