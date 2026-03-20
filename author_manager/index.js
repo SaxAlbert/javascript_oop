@@ -4,9 +4,11 @@
  */
 
 import { FormView } from "./form.js"
+import { ImportExport } from "./importexport.js"
 import { AuthorManager } from "./manager.js"
 import { Navigationbar } from "./navigationbar.js"
 import { TableView } from "./table.js"
+import { ViewElement } from "./viewelement.js"
 
 const formFields = [
     {
@@ -41,5 +43,9 @@ navbar.addViewElement('Táblázat', tableView)
 const formView=new FormView('tableForm', formFields, manager)
 formView.appendTo(document.body)
 navbar.addViewElement('Form', formView)
+
+const importExport=new ImportExport('importexport',manager)
+importExport.appendTo(document.body)
+navbar.addViewElement('Import/Export', importExport)
 
 navbar.activate('table')

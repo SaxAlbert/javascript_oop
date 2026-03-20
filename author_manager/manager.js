@@ -7,6 +7,11 @@
  * @param {string} message
  * @returns {void}
  * 
+ * 
+ * @callback ImportResultCallback
+ * @param {string} message
+ * @returns {void}
+ * 
  */
 class AuthorManager{
 
@@ -23,8 +28,19 @@ class AuthorManager{
      */
     #addElementResultCallback
 
+    /**
+     * @type {ImportResultCallback}
+     */
+    #importResultCallback
+
     set addElementResultCallback(value){
         this.#addElementResultCallback=value
+    }
+    /**
+     * @param {ImportResultCallback} value
+     */
+    set ImportResultCallback(value){
+        return this.#importResultCallback=value
     }
     /**
      * @param {TableCallback} values
@@ -56,8 +72,42 @@ class AuthorManager{
         }
         
     }
+    /**
+     * @returns {void}
+     */
     getAllElement(){
         this.#tableCallback(this.#authorList)
+    }
+    /**
+     * @returns {string}
+     */
+    getExportString(){
+        const result=[]
+        for(const author of this.#authorList){
+            result.push(`${author.name};${author.work};${author.concept}`)
+        }
+        return result.join("\n")
+    }
+    /**
+     * 
+     * @param {import(".").AuthorType[]} elementList 
+     */
+    addElementList(elementList){
+        for(const elem of elementList){
+            const author=new Author()
+            author.id=this.#authorList.length
+            author.name=elem.author
+            author.work=elem.work
+            author.concept=elem.concept
+            if(author.validate()){
+                this.#authorList.push(author)
+                this.#importResultCallback("Sikeres importálás")
+            }
+            else{
+                this.#importResultCallback("Nem volt sikeres az importálás")
+                break;
+            }
+        }
     }
 
 }
