@@ -26,22 +26,22 @@ class FormView extends ViewElement{ //leszármazunk a ViewElementből és defini
         super(id)//meghívjuk a szülőosztály konstruktorát
         this.#manager=manager //értéket adunk a privát manager tulajdonságnak
         this.#formInputList=[]//létrehozunk egy üres listát a privát formInputList tulajdonságnak 
-        const form=document.createElement('form') //létrehozunk egy formot
+        this.#form=document.createElement('form') //létrehozunk egy formot
         for(const field of FormFieldList){//végigiterálunk a bemeneti formFieldList paraméterén
-            const formField=new FormField(field.id,field.label,field.name,form)//őéldányosítjuk a formfield-et
+            const formField=new FormField(field.id,field.label,field.name,this.#form)//őéldányosítjuk a formfield-et
             this.#formInputList.push(formField)// hozzáadjuk a formInputList listához
         }
         const button=document.createElement('button')//létrehozunk egy gombot
         button.innerText="Küldés"//megadjuk a szövegét
-        form.appendChild(button)//hozzáadjuk a formhoz
+        this.#form.appendChild(button)//hozzáadjuk a formhoz
         const resultDiv=document.createElement('div')//létrehozunk egy divet
         this.div.appendChild(resultDiv)//hozzácsattoljuk a resultDiv-et a viewElement div-hez
-        form.addEventListener('submit', (e)=>{ //feliratkozunk a form submit eseménykezelőre
+        this.#form.addEventListener('submit', (e)=>{ //feliratkozunk a form submit eseménykezelőre
             e.preventDefault()// megakadályozzuk az űrlap alapértelemzett működését
             const elem=this.#createElement()//meghívjuk a createElement metódust
             this.#manager.addElement(elem) //Meghívjuk a manager addElement függvényét
         })
-        this.div.appendChild(form)//hozzácsattoljuk a formot a divhez
+        this.div.appendChild(this.#form)//hozzácsattoljuk a formot a divhez
         this.#manager.addElementResultCallback=(result)=>{//definiáljuk az addElementResultCallbacket
             resultDiv.innerText=result //beállítjuk a resultDiv értékének a kapott stringet
             setTimeout(()=>{ //meghívjuk a setTimeout-ot

@@ -166,7 +166,7 @@ class Author{  //definiálunk egy Author entitás osztályt
      * @returns {boolean}
      */
     validate(){ //definiálunk egy validate függvényt a példánynak
-        return this.#id>0 && this.#name && this.#concept && this.#work //ha mindennek helyes értéke van igazzal tér vissza, egyébként hamis 
+        return this.#name && this.#concept && this.#work //ha mindennek helyes értéke van igazzal tér vissza, egyébként hamis 
     }
 }
 
